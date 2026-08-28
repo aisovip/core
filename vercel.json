@@ -1,0 +1,14 @@
+{
+  "functions": {
+    "apps/core/dist/main.js": {
+      "runtime": "nodejs22.x",
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/apps/core/dist/main.js"
+    }
+  ]
+}
