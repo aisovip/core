@@ -72,3 +72,19 @@ function isCliEntry(): boolean {
 if (isCliEntry()) {
   startMain()
 }
+
+// main.ts 末尾
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import * as serverless from 'serverless-http';
+
+let cachedServer: any;
+
+export const handler = async (event: any, context: any) => {
+  if (!cachedServer) {
+    const app = await NestFactory.create(AppModule);
+    await app.init();
+    cachedServer = serverless(app.getHttpAdapter().getInstance());
+  }
+  return cachedServer(event, context);
+};
